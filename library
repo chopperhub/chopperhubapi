@@ -1,0 +1,197 @@
+local library = {}
+
+function library:CreateWindow(title)
+    local Design = Instance.new("ScreenGui")
+    local Main = Instance.new("Frame")
+    local SectionsTab = Instance.new("Frame")
+    local UIGridLayout = Instance.new("UIGridLayout")
+    local UIPadding = Instance.new("UIPadding")
+    local Sections = Instance.new("Frame")
+    local Title = Instance.new("TextLabel")
+    local Exit = Instance.new("TextButton")
+    
+    Design.Name = "Design"
+    Design.Parent = game:GetService("CoreGui")
+
+    Main.Name = "Main"
+    Main.Parent = Design
+    Main.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    Main.BorderSizePixel = 0
+    Main.Position = UDim2.new(0.38754952, 0, 0.228434741, 0)
+    Main.Size = UDim2.new(0, 620, 0, 320)
+    Main.Draggable = true
+    Main.Selectable = true
+    Main.Active = true
+
+    SectionsTab.Name = "SectionsTab"
+    SectionsTab.Parent = Main
+    SectionsTab.BackgroundColor3 = Color3.fromRGB(34, 33, 50)
+    SectionsTab.BorderSizePixel = 0
+    SectionsTab.Position = UDim2.new(0.00967741944, 0, 0.0593750477, 0)
+    SectionsTab.Size = UDim2.new(-0.00741936453, 136, 0.922000051, 0)
+    SectionsTab.ZIndex = 1
+    UIGridLayout.Parent = SectionsTab
+    UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout.CellSize = UDim2.new(0, 129, 0, 31)
+
+    UIPadding.Parent = SectionsTab
+    UIPadding.PaddingTop = UDim.new(0, 20)
+
+    Sections.Name = "Sections"
+    Sections.Parent = Main
+    Sections.BackgroundColor3 = Color3.fromRGB(34, 33, 50)
+    Sections.BorderSizePixel = 0
+    Sections.Position = UDim2.new(0.230000004, 0, 0.0590000004, 0)
+    Sections.Size = UDim2.new(0.541000009, 136, 0.921999991, 0)
+
+    Title.Name = "Title"
+    Title.Parent = Main
+    Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Title.BackgroundTransparency = 1.000
+    Title.Position = UDim2.new(0.00967741944, 0, 0, 0)
+    Title.Size = UDim2.new(0, 200, 0, 19)
+    Title.ZIndex = 1
+    Title.Font = Enum.Font.GothamBlack
+    Title.Text = title
+    Title.TextColor3 = Color3.fromRGB(220, 220, 220)
+    Title.TextSize = 14.000
+    Title.TextXAlignment = Enum.TextXAlignment.Left
+
+    Exit.Name = "Exit"
+    Exit.Parent = Main
+    Exit.BackgroundColor3 = Color3.fromRGB(255, 102, 75)
+    Exit.BorderSizePixel = 0
+    Exit.Position = UDim2.new(0.979032218, 0, 0.0125000002, 0)
+    Exit.Size = UDim2.new(0, 10, 0, 10)
+    Exit.ZIndex = 1
+    Exit.Font = Enum.Font.SourceSans
+    Exit.Text = ""
+    Exit.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Exit.TextSize = 14.000
+    Exit.MouseButton1Click:connect(function()
+        Design:Destroy()
+    end)
+
+    local sLibrary = {}
+
+    function sLibrary:CreateSection(text)
+
+        local TextButton = Instance.new("TextButton")
+        local Section = Instance.new("Frame")
+        local UIGridLayout_2 = Instance.new("UIGridLayout")
+        local UIPadding_2 = Instance.new("UIPadding")
+
+        UIGridLayout_2.Parent = Section
+        UIGridLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+        UIGridLayout_2.CellSize = UDim2.new(0, 455, 0, 38)
+
+        UIPadding_2.Parent = Section
+        UIPadding_2.PaddingLeft = UDim.new(0, 7)
+        UIPadding_2.PaddingTop = UDim.new(0, 35)
+
+        TextButton.Name = text
+        TextButton.Parent = SectionsTab
+        TextButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        TextButton.BackgroundTransparency = 1.000
+        TextButton.Position = UDim2.new(0, 0, 0.108984336, 0)
+        TextButton.Size = UDim2.new(0, 129, 0, 31)
+        TextButton.ZIndex = 2
+        TextButton.Font = Enum.Font.GothamBold
+        TextButton.Text = text
+        TextButton.TextColor3 = Color3.fromRGB(155,155,155)
+        TextButton.TextSize = 17.000
+        TextButton.TextWrapped = true
+
+        Section.Name = text
+        Section.Parent = Sections
+        Section.BackgroundColor3 = Color3.fromRGB(34, 33, 50)
+        Section.BorderSizePixel = 0
+        Section.Size = UDim2.new(0.541000009, 136, 0.921999991, 0)
+        Section.Visible = false
+
+
+         TextButton.MouseButton1Down:connect(function()
+            for i2,v2 in pairs (SectionsTab:GetChildren()) do
+                if v2:IsA("TextButton") then
+                    game:GetService("TweenService"):Create(v2, TweenInfo.new(.2), {TextColor3 = Color3.fromRGB(155,155,155) } ):Play()
+          
+                end
+            end
+
+            for i,v in pairs (Sections:GetChildren()) do              
+                    v.Visible = false         
+            end
+
+            game:GetService("TweenService"):Create(TextButton, TweenInfo.new(.2), {TextColor3 = Color3.fromRGB(250,250,250) } ):Play()
+            Section.Visible = true
+        end)
+
+
+
+
+        local SectionStuff = {}
+
+        function SectionStuff:CreateToggle(text, callback)
+            local actions = {}
+            local value = false
+
+            text = text or "New Toggle"
+            callback = callback or function() end
+
+            local Toggle = Instance.new("Frame")
+            local Toggle_2 = Instance.new("TextButton")
+            local Title_2 = Instance.new("TextLabel")
+
+            Toggle.Name = text
+            Toggle.Parent = Section
+            Toggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+            Toggle.BorderSizePixel = 0
+            Toggle.Position = UDim2.new(0.021212507, 0, 0.122017272, 0)
+            Toggle.Size = UDim2.new(0, 455, 0, 38)
+            Toggle.ZIndex = 8
+
+            Toggle_2.Name = "Toggle"
+            Toggle_2.Parent = Toggle
+            Toggle_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+            Toggle_2.BorderColor3 = Color3.fromRGB(34, 33, 50)
+            Toggle_2.BorderSizePixel = 2
+            Toggle_2.Position = UDim2.new(0.938461542, 0, 0.272495747, 0)
+            Toggle_2.Size = UDim2.new(0, 20, 0, 20)
+            Toggle_2.ZIndex = 8
+            Toggle_2.Font = Enum.Font.SourceSans
+            Toggle_2.Text = ""
+            Toggle_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+            Toggle_2.TextSize = 14.000
+
+            Title_2.Name = "Title"
+            Title_2.Parent = Toggle
+            Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            Title_2.BackgroundTransparency = 1.000
+            Title_2.Position = UDim2.new(0.0241758246, 0, 0, 0)
+            Title_2.Size = UDim2.new(0, 200, 1, 0)
+            Title_2.ZIndex = 10
+            Title_2.Font = Enum.Font.GothamBlack
+            Title_2.Text = text
+            Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+            Title_2.TextSize = 14.000
+            Title_2.TextXAlignment = Enum.TextXAlignment.Left
+
+            local function Toggle()
+                value = not value
+                Toggle_2.BackgroundColor3 = value and Color3.fromRGB(86, 85, 130) or Color3.fromRGB(54, 53, 81)
+                pcall(callback, value)
+            end
+
+            Toggle_2.MouseButton1Down:connect(Toggle)
+        end
+
+        return SectionStuff
+
+    end
+
+    return sLibrary
+
+end
+
+
+return library
