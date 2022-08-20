@@ -1,0 +1,2180 @@
+    print(game.PlaceId )
+
+if game.PlaceId == 4809447488 then
+
+
+    -- SERVICES 
+
+    local rs = game:GetService("RunService")
+    local t = game:GetService("TweenService")
+    local ws = game:GetService("Workspace")
+    local pf = game:GetService("PathfindingService")
+
+
+    -- VARS
+
+    _G.settings = {
+
+        autoDungeon = false;
+        dungeonSelected = "";
+        dungeonModeSelected = "";
+        webhook = false;
+        webhookURL = "";
+        nameSpoof= false;
+        
+    }
+
+    local player = game:GetService("Players").LocalPlayer
+    local stats = player:WaitForChild("stats")
+
+
+    local filename = game.Players.LocalPlayer.Name.. "-VentureTale" .. "-settings.txt";
+
+    for i,v in pairs(_G.settings) do
+        print(i,v)
+    end
+
+
+    function loadsettings()
+        print("Chopper Hub: Loading settings...")
+        local httpService = game:GetService("HttpService")
+        if readfile and isfile and isfile("Chopper Hub/"..filename) then
+                _G.settings = httpService:JSONDecode(readfile("Chopper Hub/"..filename))
+                print("Chopper Hub: Settings Loaded.")
+                
+            else
+                print("Chopper Hub: Executor isn't supported.")
+
+        end
+
+    end
+
+
+
+
+    function saveSettings()
+        print("Chopper Hub: Saving settings...")
+        local json
+        local httpService = game:GetService("HttpService")
+        if writefile and makefolder then
+            print("Chopper Hub: Settings Saved.")
+            json = httpService:JSONEncode(_G.settings)
+            local settingsTXT = writefile("Chopper Hub/"..filename, json)
+            makefolder("Chopper Hub")
+
+        else
+            print("Chopper Hub: Executor doesn't support saving settings.")
+        end
+    end
+
+
+
+    -- FUNCTIONS
+
+
+    local random = Random.new()
+    local letters = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}
+
+
+    function getRandomLetter()
+        return letters[random:NextInteger(1,#letters)]
+    end
+
+
+    function getRandomString(length, includeCapitals)
+        local length = length or 10
+        local str = ''
+        for i=1,length do
+            local randomLetter = getRandomLetter()
+            if includeCapitals and random:NextNumber() > .5 then
+                randomLetter = string.upper(randomLetter)
+            end
+            str = str .. randomLetter
+        end
+        return str
+    end
+
+    function nameSpoof()
+        spawn(function()
+            while _G.settings.nameSpoof do
+                wait(math.random(0.1,1))
+                player.PlayerGui.PartyPlayerList.PartyPlayerList.localPlayer.Info.MainFrame.Username.Text = getRandomString(math.random(7,20), true)
+            end
+        end)
+    end
+
+    function hasHumanoid(char)
+        if char and char:FindFirstChild("Humanoid") and char.Humanoid.Health > 0 then
+            return true
+        end
+
+        return false
+    end
+
+    function hasWeapon()
+        if stats.Equipped:FindFirstChild("Wep1") or stats.Equipped:FindFirstChild("Wep2") then
+            return true
+        end
+        return false
+    end
+
+    function autoDungeonn()
+        print("autodungeon started")
+        spawn(function()
+            while _G.settings.autoDungeon == true do
+                wait(3)
+                if _G.settings.autoDungeon == true then
+                    print("auto")
+                    local A_3 = false
+                    local A_4 = "Solo"
+                    local Event = game:GetService("ReplicatedStorage").Remotes.UI.Lobby.StartLobby
+                    Event:FireServer(_G.settings.dungeonSelected, _G.settings.dungeonModeSelected, A_3, "Solo")
+                    else
+                    return
+                end
+            end
+        end)
+    end
+
+
+
+
+
+    -- SETTINGS GETTING LOADED
+
+    loadsettings()
+
+    if _G.settings.autoDungeon then
+        autoDungeonn()
+    end
+
+    if _G.settings.nameSpoof then
+        nameSpoof()
+    end
+
+
+
+
+
+
+    -- Gui to Lua
+    -- Version: 3.2
+
+    -- Instances:
+
+    local VentureTale = Instance.new("ScreenGui")
+    local Main = Instance.new("Frame")
+    local SectionsTab = Instance.new("Frame")
+    local Dungeon = Instance.new("TextButton")
+    local S = Instance.new("Frame")
+    local UIGridLayout = Instance.new("UIGridLayout")
+    local UIPadding = Instance.new("UIPadding")
+    local Settings = Instance.new("TextButton")
+    local S_2 = Instance.new("Frame")
+    local Sections = Instance.new("Frame")
+    local Dungeon_2 = Instance.new("Frame")
+    local TabName = Instance.new("TextLabel")
+    local DungeonMap = Instance.new("Frame")
+    local DungeonMapToggle = Instance.new("TextButton")
+    local Dungeons = Instance.new("Frame")
+    local UIGridLayout_2 = Instance.new("UIGridLayout")
+    local GoblinCave = Instance.new("TextButton")
+    local EnchantedForest = Instance.new("TextButton")
+    local BanditCastle = Instance.new("TextButton")
+    local UIPadding_2 = Instance.new("UIPadding")
+    local DungeonToggled = Instance.new("TextLabel")
+    local Map = Instance.new("TextLabel")
+    local DungeonMode = Instance.new("Frame")
+    local DungeonModeToggle = Instance.new("TextButton")
+    local DungeonMode_2 = Instance.new("Frame")
+    local UIGridLayout_3 = Instance.new("UIGridLayout")
+    local Easy = Instance.new("TextButton")
+    local Normal = Instance.new("TextButton")
+    local Hard = Instance.new("TextButton")
+    local UIPadding_3 = Instance.new("UIPadding")
+    local Raid = Instance.new("TextButton")
+    local Endless = Instance.new("TextButton")
+    local DungeonModeToggled = Instance.new("TextLabel")
+    local Mode = Instance.new("TextLabel")
+    local AutoDungeon = Instance.new("Frame")
+    local AutoDungeonToggle = Instance.new("TextButton")
+    local FeatureName = Instance.new("TextLabel")
+    local Settings_2 = Instance.new("Frame")
+    local TabName_2 = Instance.new("TextLabel")
+    local WeebhookURLFrame = Instance.new("Frame")
+    local TextBox = Instance.new("TextBox")
+    local webhookURL = Instance.new("TextLabel")
+    local NameSpoof = Instance.new("Frame")
+    local AutoDungeonToggle_2 = Instance.new("TextButton")
+    local FeatureName_2 = Instance.new("TextLabel")
+    local Webhook = Instance.new("Frame")
+    local WebhookToggle = Instance.new("TextButton")
+    local FeatureName_3 = Instance.new("TextLabel")
+    local HubName = Instance.new("TextLabel")
+    local Exit = Instance.new("TextButton")
+
+    --Properties:
+
+    VentureTale.Name = "VentureTale"
+    VentureTale.Parent = game:GetService("CoreGui")
+
+    Main.Name = "Main"
+    Main.Parent = VentureTale
+    Main.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    Main.BorderSizePixel = 0
+    Main.Position = UDim2.new(0.570966601, 0, 0.0975120515, 0)
+    Main.Size = UDim2.new(0, 620, 0, 320)
+
+    SectionsTab.Name = "SectionsTab"
+    SectionsTab.Parent = Main
+    SectionsTab.BackgroundColor3 = Color3.fromRGB(34, 33, 50)
+    SectionsTab.BorderSizePixel = 0
+    SectionsTab.Position = UDim2.new(0.00967741944, 0, 0.0593750477, 0)
+    SectionsTab.Size = UDim2.new(-0.00741936453, 136, 0.922000051, 0)
+    SectionsTab.ZIndex = 10
+
+    Dungeon.Name = "Dungeon"
+    Dungeon.Parent = SectionsTab
+    Dungeon.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Dungeon.BackgroundTransparency = 1.000
+    Dungeon.Position = UDim2.new(0, 0, 0.108984336, 0)
+    Dungeon.Size = UDim2.new(0, 129, 0, 31)
+    Dungeon.ZIndex = 10
+    Dungeon.Font = Enum.Font.GothamBold
+    Dungeon.Text = "Dungeon"
+    Dungeon.TextColor3 = Color3.fromRGB(220, 220, 220)
+    Dungeon.TextSize = 17.000
+    Dungeon.TextWrapped = true
+
+    S.Name = "S"
+    S.Parent = Dungeon
+    S.BackgroundColor3 = Color3.fromRGB(199, 172, 255)
+    S.BorderSizePixel = 0
+    S.Position = UDim2.new(0.103494823, 0, 0.159999996, 0)
+    S.Size = UDim2.new(0, 5, 0, 20)
+    S.ZIndex = 11
+
+    UIGridLayout.Parent = SectionsTab
+    UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout.CellSize = UDim2.new(0, 129, 0, 31)
+
+    UIPadding.Parent = SectionsTab
+    UIPadding.PaddingTop = UDim.new(0, 20)
+
+    Settings.Name = "Settings"
+    Settings.Parent = SectionsTab
+    Settings.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Settings.BackgroundTransparency = 1.000
+    Settings.Position = UDim2.new(0, 0, 0.108984336, 0)
+    Settings.Size = UDim2.new(0, 129, 0, 31)
+    Settings.ZIndex = 10
+    Settings.Font = Enum.Font.GothamBold
+    Settings.Text = "Settings"
+    Settings.TextColor3 = Color3.fromRGB(220, 220, 220)
+    Settings.TextSize = 17.000
+    Settings.TextWrapped = true
+
+    S_2.Name = "S"
+    S_2.Parent = Settings
+    S_2.BackgroundColor3 = Color3.fromRGB(199, 172, 255)
+    S_2.BorderSizePixel = 0
+    S_2.Position = UDim2.new(0.103494823, 0, 0.159999996, 0)
+    S_2.Size = UDim2.new(0, 5, 0, 20)
+    S_2.Visible = false
+    S_2.ZIndex = 11
+
+    Sections.Name = "Sections"
+    Sections.Parent = Main
+    Sections.BackgroundColor3 = Color3.fromRGB(34, 33, 50)
+    Sections.BorderSizePixel = 0
+    Sections.Position = UDim2.new(0.230000004, 0, 0.0590000004, 0)
+    Sections.Size = UDim2.new(0.541000009, 136, 0.921999991, 0)
+
+    Dungeon_2.Name = "Dungeon"
+    Dungeon_2.Parent = Sections
+    Dungeon_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Dungeon_2.BackgroundTransparency = 1.000
+    Dungeon_2.Size = UDim2.new(1, 0, 1, 0)
+
+    TabName.Name = "TabName"
+    TabName.Parent = Dungeon_2
+    TabName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TabName.BackgroundTransparency = 1.000
+    TabName.Position = UDim2.new(0.021212507, 0, 0.0135574834, 0)
+    TabName.Size = UDim2.new(0, 103, 0, 20)
+    TabName.ZIndex = 10
+    TabName.Font = Enum.Font.GothamBlack
+    TabName.Text = "Dungeon Tab"
+    TabName.TextColor3 = Color3.fromRGB(255, 255, 232)
+    TabName.TextSize = 14.000
+    TabName.TextXAlignment = Enum.TextXAlignment.Left
+
+    DungeonMap.Name = "DungeonMap"
+    DungeonMap.Parent = Dungeon_2
+    DungeonMap.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonMap.BorderSizePixel = 0
+    DungeonMap.Position = UDim2.new(0.021212507, 0, 0.288096458, 0)
+    DungeonMap.Size = UDim2.new(0, 455, 0, 38)
+    DungeonMap.ZIndex = 8
+
+    DungeonMapToggle.Name = "DungeonMapToggle"
+    DungeonMapToggle.Parent = DungeonMap
+    DungeonMapToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonMapToggle.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    DungeonMapToggle.BorderSizePixel = 2
+    DungeonMapToggle.Position = UDim2.new(0.397802204, 0, 0.272495866, 0)
+    DungeonMapToggle.Size = UDim2.new(0, 266, 0, 20)
+    DungeonMapToggle.ZIndex = 10
+    DungeonMapToggle.Font = Enum.Font.SourceSans
+    DungeonMapToggle.Text = ""
+    DungeonMapToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    DungeonMapToggle.TextSize = 14.000
+
+    Dungeons.Name = "Dungeons"
+    Dungeons.Parent = DungeonMapToggle
+    Dungeons.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    Dungeons.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    Dungeons.BorderSizePixel = 2
+    Dungeons.Position = UDim2.new(0, 0, 1.19999766, 0)
+    Dungeons.Size = UDim2.new(1, 0, -1.29999852, 100)
+    Dungeons.Visible = false
+    Dungeons.ZIndex = 10
+
+    UIGridLayout_2.Parent = Dungeons
+    UIGridLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout_2.CellSize = UDim2.new(1, 0, 0, 18)
+
+    GoblinCave.Name = "Goblin Cave"
+    GoblinCave.Parent = Dungeons
+    GoblinCave.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    GoblinCave.BackgroundTransparency = 0.850
+    GoblinCave.Size = UDim2.new(0, 200, 0, 50)
+    GoblinCave.ZIndex = 10
+    GoblinCave.Font = Enum.Font.GothamBlack
+    GoblinCave.Text = "Goblin Cave"
+    GoblinCave.TextColor3 = Color3.fromRGB(189, 189, 189)
+    GoblinCave.TextSize = 14.000
+    GoblinCave.TextWrapped = true
+
+    EnchantedForest.Name = "Enchanted Forest"
+    EnchantedForest.Parent = Dungeons
+    EnchantedForest.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    EnchantedForest.BackgroundTransparency = 0.850
+    EnchantedForest.Size = UDim2.new(0, 200, 0, 50)
+    EnchantedForest.ZIndex = 10
+    EnchantedForest.Font = Enum.Font.GothamBlack
+    EnchantedForest.Text = "Enchanted Forest"
+    EnchantedForest.TextColor3 = Color3.fromRGB(189, 189, 189)
+    EnchantedForest.TextSize = 14.000
+    EnchantedForest.TextWrapped = true
+
+    BanditCastle.Name = "Bandit Castle"
+    BanditCastle.Parent = Dungeons
+    BanditCastle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    BanditCastle.BackgroundTransparency = 0.850
+    BanditCastle.Position = UDim2.new(0.0112781953, 0, 0.499999791, 0)
+    BanditCastle.Size = UDim2.new(0, 200, 0, 50)
+    BanditCastle.ZIndex = 10
+    BanditCastle.Font = Enum.Font.GothamBlack
+    BanditCastle.Text = "Bandit Castle"
+    BanditCastle.TextColor3 = Color3.fromRGB(189, 189, 189)
+    BanditCastle.TextSize = 14.000
+    BanditCastle.TextWrapped = true
+
+    UIPadding_2.Parent = Dungeons
+    UIPadding_2.PaddingTop = UDim.new(0, 5)
+
+    DungeonToggled.Name = "DungeonToggled"
+    DungeonToggled.Parent = DungeonMapToggle
+    DungeonToggled.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    DungeonToggled.BackgroundTransparency = 1.000
+    DungeonToggled.Position = UDim2.new(0.0298102982, 0, 0, 0)
+    DungeonToggled.Size = UDim2.new(0.970189691, 0, 1, 0)
+    DungeonToggled.ZIndex = 10
+    DungeonToggled.Font = Enum.Font.GothamBlack
+    DungeonToggled.Text = ""
+    DungeonToggled.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DungeonToggled.TextSize = 14.000
+    DungeonToggled.TextXAlignment = Enum.TextXAlignment.Left
+
+    Map.Name = "Map"
+    Map.Parent = DungeonMap
+    Map.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Map.BackgroundTransparency = 1.000
+    Map.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    Map.Size = UDim2.new(0, 200, 1, 0)
+    Map.ZIndex = 10
+    Map.Font = Enum.Font.GothamBlack
+    Map.Text = "Map"
+    Map.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Map.TextSize = 14.000
+    Map.TextXAlignment = Enum.TextXAlignment.Left
+
+    DungeonMode.Name = "DungeonMode"
+    DungeonMode.Parent = Dungeon_2
+    DungeonMode.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonMode.BorderSizePixel = 0
+    DungeonMode.Position = UDim2.new(0.021212507, 0, 0.45756501, 0)
+    DungeonMode.Size = UDim2.new(0, 455, 0, 38)
+    DungeonMode.ZIndex = 8
+
+    DungeonModeToggle.Name = "DungeonModeToggle"
+    DungeonModeToggle.Parent = DungeonMode
+    DungeonModeToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonModeToggle.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    DungeonModeToggle.BorderSizePixel = 2
+    DungeonModeToggle.Position = UDim2.new(0.397802204, 0, 0.272495866, 0)
+    DungeonModeToggle.Size = UDim2.new(0, 266, 0, 20)
+    DungeonModeToggle.ZIndex = 8
+    DungeonModeToggle.Font = Enum.Font.SourceSans
+    DungeonModeToggle.Text = ""
+    DungeonModeToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    DungeonModeToggle.TextSize = 14.000
+
+    DungeonMode_2.Name = "DungeonMode"
+    DungeonMode_2.Parent = DungeonModeToggle
+    DungeonMode_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonMode_2.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    DungeonMode_2.BorderSizePixel = 2
+    DungeonMode_2.Position = UDim2.new(0, 0, 1.19999766, 0)
+    DungeonMode_2.Size = UDim2.new(1, 0, 0.650001526, 100)
+    DungeonMode_2.Visible = false
+    DungeonMode_2.ZIndex = 10
+
+    UIGridLayout_3.Parent = DungeonMode_2
+    UIGridLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout_3.CellSize = UDim2.new(1, 0, 0, 18)
+
+    Easy.Name = "Easy"
+    Easy.Parent = DungeonMode_2
+    Easy.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Easy.BackgroundTransparency = 0.850
+    Easy.Size = UDim2.new(0, 200, 0, 50)
+    Easy.ZIndex = 10
+    Easy.Font = Enum.Font.GothamBlack
+    Easy.Text = "Goblin Cave"
+    Easy.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Easy.TextSize = 14.000
+    Easy.TextWrapped = true
+
+    Normal.Name = "Normal"
+    Normal.Parent = DungeonMode_2
+    Normal.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Normal.BackgroundTransparency = 0.850
+    Normal.Size = UDim2.new(0, 200, 0, 50)
+    Normal.ZIndex = 10
+    Normal.Font = Enum.Font.GothamBlack
+    Normal.Text = "Enchanted Forest"
+    Normal.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Normal.TextSize = 14.000
+    Normal.TextWrapped = true
+
+    Hard.Name = "Hard"
+    Hard.Parent = DungeonMode_2
+    Hard.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Hard.BackgroundTransparency = 0.850
+    Hard.Position = UDim2.new(0.0112781953, 0, 0.499999791, 0)
+    Hard.Size = UDim2.new(0, 200, 0, 50)
+    Hard.ZIndex = 10
+    Hard.Font = Enum.Font.GothamBlack
+    Hard.Text = "Bandit Castle"
+    Hard.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Hard.TextSize = 14.000
+    Hard.TextWrapped = true
+
+    UIPadding_3.Parent = DungeonMode_2
+    UIPadding_3.PaddingTop = UDim.new(0, 5)
+
+    Raid.Name = "Raid"
+    Raid.Parent = DungeonMode_2
+    Raid.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Raid.BackgroundTransparency = 0.850
+    Raid.Size = UDim2.new(0, 200, 0, 50)
+    Raid.ZIndex = 10
+    Raid.Font = Enum.Font.GothamBlack
+    Raid.Text = "Goblin Cave"
+    Raid.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Raid.TextSize = 14.000
+    Raid.TextWrapped = true
+
+    Endless.Name = "Endless"
+    Endless.Parent = DungeonMode_2
+    Endless.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Endless.BackgroundTransparency = 0.850
+    Endless.Size = UDim2.new(0, 200, 0, 50)
+    Endless.ZIndex = 10
+    Endless.Font = Enum.Font.GothamBlack
+    Endless.Text = "Goblin Cave"
+    Endless.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Endless.TextSize = 14.000
+    Endless.TextWrapped = true
+
+    DungeonModeToggled.Name = "DungeonModeToggled"
+    DungeonModeToggled.Parent = DungeonModeToggle
+    DungeonModeToggled.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    DungeonModeToggled.BackgroundTransparency = 1.000
+    DungeonModeToggled.Position = UDim2.new(0.0298102982, 0, 0, 0)
+    DungeonModeToggled.Size = UDim2.new(0.970189691, 0, 1, 0)
+    DungeonModeToggled.ZIndex = 8
+    DungeonModeToggled.Font = Enum.Font.GothamBlack
+    DungeonModeToggled.Text = ""
+    DungeonModeToggled.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DungeonModeToggled.TextSize = 14.000
+    DungeonModeToggled.TextXAlignment = Enum.TextXAlignment.Left
+
+    Mode.Name = "Mode"
+    Mode.Parent = DungeonMode
+    Mode.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Mode.BackgroundTransparency = 1.000
+    Mode.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    Mode.Size = UDim2.new(0, 200, 1, 0)
+    Mode.ZIndex = 8
+    Mode.Font = Enum.Font.GothamBlack
+    Mode.Text = "Mode"
+    Mode.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Mode.TextSize = 14.000
+    Mode.TextXAlignment = Enum.TextXAlignment.Left
+
+    AutoDungeon.Name = "AutoDungeon"
+    AutoDungeon.Parent = Dungeon_2
+    AutoDungeon.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    AutoDungeon.BorderSizePixel = 0
+    AutoDungeon.Position = UDim2.new(0.021212507, 0, 0.122017272, 0)
+    AutoDungeon.Size = UDim2.new(0, 455, 0, 38)
+    AutoDungeon.ZIndex = 8
+
+    AutoDungeonToggle.Name = "AutoDungeonToggle"
+    AutoDungeonToggle.Parent = AutoDungeon
+    AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    AutoDungeonToggle.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    AutoDungeonToggle.BorderSizePixel = 2
+    AutoDungeonToggle.Position = UDim2.new(0.938461542, 0, 0.272495747, 0)
+    AutoDungeonToggle.Size = UDim2.new(0, 20, 0, 20)
+    AutoDungeonToggle.ZIndex = 8
+    AutoDungeonToggle.Font = Enum.Font.SourceSans
+    AutoDungeonToggle.Text = ""
+    AutoDungeonToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    AutoDungeonToggle.TextSize = 14.000
+
+    FeatureName.Name = "FeatureName"
+    FeatureName.Parent = AutoDungeon
+    FeatureName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName.BackgroundTransparency = 1.000
+    FeatureName.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    FeatureName.Size = UDim2.new(0, 200, 1, 0)
+    FeatureName.ZIndex = 10
+    FeatureName.Font = Enum.Font.GothamBlack
+    FeatureName.Text = "Auto Dungeon"
+    FeatureName.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName.TextSize = 14.000
+    FeatureName.TextXAlignment = Enum.TextXAlignment.Left
+
+    Settings_2.Name = "Settings"
+    Settings_2.Parent = Sections
+    Settings_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Settings_2.BackgroundTransparency = 1.000
+    Settings_2.Size = UDim2.new(1, 0, 1, 0)
+    Settings_2.Visible = false
+
+    TabName_2.Name = "TabName"
+    TabName_2.Parent = Settings_2
+    TabName_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TabName_2.BackgroundTransparency = 1.000
+    TabName_2.Position = UDim2.new(0.021212507, 0, 0.0135574834, 0)
+    TabName_2.Size = UDim2.new(0, 103, 0, 20)
+    TabName_2.ZIndex = 10
+    TabName_2.Font = Enum.Font.GothamBlack
+    TabName_2.Text = "Settings Tab"
+    TabName_2.TextColor3 = Color3.fromRGB(255, 255, 232)
+    TabName_2.TextSize = 14.000
+    TabName_2.TextXAlignment = Enum.TextXAlignment.Left
+
+    WeebhookURLFrame.Name = "WeebhookURLFrame"
+    WeebhookURLFrame.Parent = Settings_2
+    WeebhookURLFrame.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    WeebhookURLFrame.BorderSizePixel = 0
+    WeebhookURLFrame.Position = UDim2.new(0.021212507, 0, 0.288096458, 0)
+    WeebhookURLFrame.Size = UDim2.new(0, 455, 0, 38)
+    WeebhookURLFrame.ZIndex = 8
+
+    TextBox.Parent = WeebhookURLFrame
+    TextBox.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    TextBox.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    TextBox.BorderSizePixel = 2
+    TextBox.Position = UDim2.new(0.398000002, 0, 0.272000015, 0)
+    TextBox.Size = UDim2.new(0, 266, 0, 20)
+    TextBox.ZIndex = 10
+    TextBox.Font = Enum.Font.GothamBlack
+    TextBox.Text = "URL here"
+    TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextBox.TextSize = 14.000
+    TextBox.TextWrapped = true
+
+    webhookURL.Name = "webhookURL"
+    webhookURL.Parent = WeebhookURLFrame
+    webhookURL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    webhookURL.BackgroundTransparency = 1.000
+    webhookURL.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    webhookURL.Size = UDim2.new(0, 200, 1, 0)
+    webhookURL.ZIndex = 10
+    webhookURL.Font = Enum.Font.GothamBlack
+    webhookURL.Text = "Webhook URL"
+    webhookURL.TextColor3 = Color3.fromRGB(255, 255, 255)
+    webhookURL.TextSize = 14.000
+    webhookURL.TextXAlignment = Enum.TextXAlignment.Left
+
+    NameSpoof.Name = "NameSpoof"
+    NameSpoof.Parent = Settings_2
+    NameSpoof.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    NameSpoof.BorderSizePixel = 0
+    NameSpoof.Position = UDim2.new(0.021212507, 0, 0.122017272, 0)
+    NameSpoof.Size = UDim2.new(0, 455, 0, 38)
+    NameSpoof.ZIndex = 8
+
+    AutoDungeonToggle_2.Name = "AutoDungeonToggle"
+    AutoDungeonToggle_2.Parent = NameSpoof
+    AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    AutoDungeonToggle_2.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    AutoDungeonToggle_2.BorderSizePixel = 2
+    AutoDungeonToggle_2.Position = UDim2.new(0.938461542, 0, 0.272495747, 0)
+    AutoDungeonToggle_2.Size = UDim2.new(0, 20, 0, 20)
+    AutoDungeonToggle_2.ZIndex = 8
+    AutoDungeonToggle_2.Font = Enum.Font.SourceSans
+    AutoDungeonToggle_2.Text = ""
+    AutoDungeonToggle_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+    AutoDungeonToggle_2.TextSize = 14.000
+
+    FeatureName_2.Name = "FeatureName"
+    FeatureName_2.Parent = NameSpoof
+    FeatureName_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName_2.BackgroundTransparency = 1.000
+    FeatureName_2.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    FeatureName_2.Size = UDim2.new(0, 200, 1, 0)
+    FeatureName_2.ZIndex = 10
+    FeatureName_2.Font = Enum.Font.GothamBlack
+    FeatureName_2.Text = "Name Spoofer"
+    FeatureName_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName_2.TextSize = 14.000
+    FeatureName_2.TextXAlignment = Enum.TextXAlignment.Left
+
+    Webhook.Name = "Webhook"
+    Webhook.Parent = Settings_2
+    Webhook.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    Webhook.BorderSizePixel = 0
+    Webhook.Position = UDim2.new(0.021212507, 0, 0.454175591, 0)
+    Webhook.Size = UDim2.new(0, 455, 0, 38)
+    Webhook.ZIndex = 8
+
+    WebhookToggle.Name = "WebhookToggle"
+    WebhookToggle.Parent = Webhook
+    WebhookToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    WebhookToggle.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    WebhookToggle.BorderSizePixel = 2
+    WebhookToggle.Position = UDim2.new(0.938461542, 0, 0.272495747, 0)
+    WebhookToggle.Size = UDim2.new(0, 20, 0, 20)
+    WebhookToggle.ZIndex = 8
+    WebhookToggle.Font = Enum.Font.SourceSans
+    WebhookToggle.Text = ""
+    WebhookToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    WebhookToggle.TextSize = 14.000
+
+    FeatureName_3.Name = "FeatureName"
+    FeatureName_3.Parent = Webhook
+    FeatureName_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName_3.BackgroundTransparency = 1.000
+    FeatureName_3.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    FeatureName_3.Size = UDim2.new(0, 200, 1, 0)
+    FeatureName_3.ZIndex = 10
+    FeatureName_3.Font = Enum.Font.GothamBlack
+    FeatureName_3.Text = "Webhook"
+    FeatureName_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName_3.TextSize = 14.000
+    FeatureName_3.TextXAlignment = Enum.TextXAlignment.Left
+
+    HubName.Name = "HubName"
+    HubName.Parent = Main
+    HubName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    HubName.BackgroundTransparency = 1.000
+    HubName.Position = UDim2.new(0.00967741944, 0, 0, 0)
+    HubName.Size = UDim2.new(0, 200, 0, 19)
+    HubName.ZIndex = 10
+    HubName.Font = Enum.Font.GothamBlack
+    HubName.Text = "Chopper Hub - Venture Tale"
+    HubName.TextColor3 = Color3.fromRGB(220, 220, 220)
+    HubName.TextSize = 14.000
+    HubName.TextXAlignment = Enum.TextXAlignment.Left
+
+    Exit.Name = "Exit"
+    Exit.Parent = Main
+    Exit.BackgroundColor3 = Color3.fromRGB(255, 102, 75)
+    Exit.BorderSizePixel = 0
+    Exit.Position = UDim2.new(0.979032218, 0, 0.0125000002, 0)
+    Exit.Size = UDim2.new(0, 10, 0, 10)
+    Exit.ZIndex = 3
+    Exit.Font = Enum.Font.SourceSans
+    Exit.Text = ""
+    Exit.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Exit.TextSize = 14.000
+
+    -- gui settings
+
+    if _G.settings.autoDungeon then
+        AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+    else
+        AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    end
+
+    if _G.settings.dungeonSelected then
+        DungeonToggled.Text = _G.settings.dungeonSelected
+    else
+        DungeonToggled.Text = ""
+    end
+
+    if _G.settings.dungeonModeSelected then
+        DungeonModeToggled.Text = _G.settings.dungeonModeSelected
+    else
+        DungeonModeToggled.Text = ""
+    end
+
+    if _G.settings.webhookURL then
+        TextBox.Text = _G.settings.webhookURL
+    else
+        TextBox.Text = ""
+    end
+
+    if _G.settings.webhook then
+        WebhookToggle.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+    else
+        WebhookToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    end
+
+    if _G.settings.nameSpoof then
+        AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+    else
+        AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    end
+
+
+
+
+
+
+
+
+
+
+
+    --- MAIN Gui
+
+    Main.Draggable = true
+    Main.Selectable = true
+    Main.Active = true
+
+    Exit.MouseButton1Click:connect(function()
+        VentureTale:Destroy()
+    end)
+
+    -- BUTTONS 
+
+
+    --SECTIONS TAB
+
+    for i,v in pairs(SectionsTab:GetChildren()) do
+        if v:IsA("TextButton") then
+            
+            v.MouseEnter:Connect(function()
+                print(v)
+                t:Create(v, TweenInfo.new(.3), {BackgroundTransparency = 0.9 } ):Play()	
+            end)
+            v.MouseLeave:Connect(function()
+                print(v)
+                t:Create(v, TweenInfo.new(.3), {BackgroundTransparency = 1 } ):Play()
+            end)
+            
+            v.MouseButton1Click:Connect(function()
+                for i2,v2 in pairs(SectionsTab:GetChildren()) do
+                    if v2:IsA("TextButton") then
+                        v2.S.Visible = false
+                        Sections:FindFirstChild(v2.Name).Visible = false
+                        v.S.Visible = true
+                        Sections:FindFirstChild(v.Name).Visible = true
+                    end
+                end
+            end)
+            
+        end
+    end
+
+
+
+
+    -- AUTO DUNGEON TOGGLE
+
+
+    AutoDungeonToggle.MouseButton1Click:Connect(function()
+        _G.settings.autoDungeon = not _G.settings.autoDungeon
+        saveSettings()
+        if _G.settings.autoDungeon then
+            autoDungeonn()
+            AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+        else
+            AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+        end
+        
+        
+    end)
+
+
+
+
+
+    --- DUNGEON Name
+
+    DungeonMapToggle.MouseButton1Up:Connect(function()
+
+        Dungeons.Visible = not Dungeons.Visible
+
+    end)
+
+
+
+
+    for	i,v in pairs(Dungeons:GetChildren()) do
+        if v:IsA("TextButton") then
+            
+            v.MouseButton1Up:Connect(function()
+
+                    if v:IsA("TextButton") then
+                        _G.settings.dungeonSelected = v.Name
+                        saveSettings()
+                        DungeonToggled.Text = v.Text
+                    end
+                    
+                    
+                    
+            end)
+            
+            
+        end
+
+    end
+
+    -- DUNGEON MODE
+
+    DungeonModeToggle.MouseButton1Up:Connect(function()
+
+        DungeonMode_2.Visible = not DungeonMode_2.Visible
+
+    end)
+
+
+
+
+    for	i,v in pairs(DungeonMode_2:GetChildren()) do
+        if v:IsA("TextButton") then
+            v.Text = v.Name
+            v.MouseButton1Up:Connect(function()
+
+                    if v:IsA("TextButton") then
+                        _G.settings.dungeonModeSelected = v.Name
+                        saveSettings()
+                        DungeonModeToggled.Text = v.Text
+                    end
+                    
+                    
+                    
+            end)
+            
+            
+        end
+
+    end
+
+    ---- WEBHOOK URL
+
+    TextBox.FocusLost:Connect(function(enter)
+        if enter then
+            _G.settings.webhookURL = TextBox.Text
+            saveSettings()
+        end
+    end)
+
+    ---- WEBHOOK TOGGLE
+
+
+    WebhookToggle.MouseButton1Up:Connect(function()
+        _G.settings.webhook = not _G.settings.webhook
+        saveSettings()
+        if _G.settings.webhook then
+            
+            WebhookToggle.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+        else
+            Toggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+        end
+    end)
+
+
+    --- NAMESPOOF TOGGLE
+
+
+    AutoDungeonToggle_2.MouseButton1Up:Connect(function()
+        _G.settings.nameSpoof = not _G.settings.nameSpoof
+        saveSettings()
+        if _G.settings.nameSpoof then
+            nameSpoof()
+            AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+        else
+            AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+        end
+    end)
+
+
+
+
+
+
+
+
+
+
+elseif game.PlaceId == 4809451454 then
+
+
+
+    -- SERVICES 
+
+    local rs = game:GetService("RunService")
+    local t = game:GetService("TweenService")
+    local ws = game:GetService("Workspace")
+    local pf = game:GetService("PathfindingService")
+
+
+    -- VARS
+
+    _G.settings = {
+
+        autoDungeon = false;
+        dungeonSelected = "";
+        dungeonModeSelected = "";
+        webhook = false;
+        webhookURL = "";
+        nameSpoof= false;
+        
+    }
+
+
+    local player = game:GetService("Players").LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local stats = player:WaitForChild("stats")
+    local proj = game.workspace.Projectiles
+    local map = game.workspace.Map
+    local vim = game:GetService("VirtualInputManager")
+    local mouse = player:GetMouse()
+    local look = mouse.Hit.Position
+    local aht = mouse.Hit.Position
+    local GameUI  = player.PlayerGui:WaitForChild("GameUI"):WaitForChild("HUD"):WaitForChild("MainFrame")
+    local Remotes   = game:GetService("ReplicatedStorage"):WaitForChild("Remotes")
+
+
+    local filename = game.Players.LocalPlayer.Name.. "-VentureTale" .. "-settings.txt";
+
+    for i,v in pairs(_G.settings) do
+        print(i,v)
+    end
+
+
+    function loadsettings()
+        print("Chopper Hub: Loading settings...")
+        local httpService = game:GetService("HttpService")
+        if readfile and isfile and isfile("Chopper Hub/"..filename) then
+                _G.settings = httpService:JSONDecode(readfile("Chopper Hub/"..filename))
+                print("Chopper Hub: Settings Loaded.")
+                
+            else
+                print("Chopper Hub: Executor isn't supported.")
+
+        end
+
+    end
+
+
+
+
+    function saveSettings()
+        print("Chopper Hub: Saving settings...")
+        local json
+        local httpService = game:GetService("HttpService")
+        if writefile and makefolder then
+            print("Chopper Hub: Settings Saved.")
+            json = httpService:JSONEncode(_G.settings)
+            local settingsTXT = writefile("Chopper Hub/"..filename, json)
+            makefolder("Chopper Hub")
+
+        else
+            print("Chopper Hub: Executor doesn't support saving settings.")
+        end
+    end
+
+
+
+
+
+    -- NUSC
+
+
+    function buildCharacter(character)
+        local myGyro    = character:WaitForChild("HumanoidRootPart"):WaitForChild("BodyGyro")
+        local myTurn    = character:WaitForChild("BodyTurning"):WaitForChild("BodyTurning")
+        myTurn  = getsenv(myTurn)
+
+        repeat task.wait() until myTurn.GetMousePoint
+        myTurn.GetMousePoint    = function() return look end
+
+        myGyro:GetPropertyChangedSignal("CFrame"):Connect(function()
+            myGyro.CFrame   = CFrame.new(aht)
+        end)
+    end
+
+
+    oldNamecall = hookfunction(getrawmetatable(game).__namecall, newcclosure(function(self, ...)
+        local myArgs    = {...}
+        local callMethod    = getnamecallmethod()
+
+        if callMethod == "FireServer" and self.Name == "UpdateMouseDirection" then
+            myArgs[1]  = look
+        end
+        return oldNamecall(self, unpack(myArgs))
+    end))
+
+
+    if player.Character then
+        buildCharacter(player.Character)
+    end
+    player.CharacterAdded:Connect(function(character)
+        buildCharacter(character)
+    end)
+
+
+    local random = Random.new()
+    local letters = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}
+
+
+    function getRandomLetter()
+        return letters[random:NextInteger(1,#letters)]
+    end
+
+
+    function getRandomString(length, includeCapitals)
+        local length = length or 10
+        local str = ''
+        for i=1,length do
+            local randomLetter = getRandomLetter()
+            if includeCapitals and random:NextNumber() > .5 then
+                randomLetter = string.upper(randomLetter)
+            end
+            str = str .. randomLetter
+        end
+        return str
+    end
+
+    function nameSpoof()
+        spawn(function()
+            while _G.settings.nameSpoof do
+                wait(math.random(0.1,1))
+                player.PlayerGui:WaitForChild("PartyPlayerList").PartyPlayerList.localPlayer.Info.MainFrame.Username.Text = getRandomString(math.random(7,20), true)
+            end
+        end)
+    end
+
+
+    -- FUNCTIONS
+
+
+
+    local function flyto(newMove)
+        local moveSpeed = 14
+        local flySpeed  = math.clamp((character.HumanoidRootPart.CFrame.Position-newMove).magnitude/moveSpeed, 0, 4)
+        local flyTweenGlide  = t:Create(character.HumanoidRootPart, TweenInfo.new(flySpeed, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {
+            CFrame  = CFrame.new(newMove)
+        })
+
+        flyTweenGlide:Play()
+        task.wait(flySpeed)
+        flyTweenGlide:Destroy()
+    end
+
+    local function hasHumanoid(char)
+        if char and char:FindFirstChild("Humanoid") and char.Humanoid.Health > 0 then
+            return true
+        end
+
+        return false
+    end
+
+    local function hasWeapon()
+        if stats.Equipped:FindFirstChild("Wep1") or stats.Equipped:FindFirstChild("Wep2") then
+            return true
+        end
+        return false
+    end
+
+    local function getNearestMob(mob)
+        local nearestMob  = nil
+        local nd   = math.huge
+
+        for _,v in pairs(workspace.NPCS:GetChildren()) do
+            if hasHumanoid(v) and hasHumanoid(character) then
+                local theirDistance = (mob-v.HumanoidRootPart.CFrame.Position).magnitude
+
+                if theirDistance <= nd then
+                    nearestMob    = v.HumanoidRootPart
+                    nd = theirDistance
+                end
+            end
+        end
+        return nearestMob
+    end
+    --[[]
+    function autoMob()
+
+        while rs.RenderStepped:Wait() do
+            pcall(function()
+    
+                    if character:FindFirstChild("HumanoidRootPart") and _G.settings.autoDungeon == true then
+                        local mob = getNearestMob(character.HumanoidRootPart.CFrame.Position)
+                                if proj:FindFirstChild("WaitingForPlayers") or proj:FindFirstChild("BossWaitingForPlayers")  then
+                                    mob = proj:FindFirstChild("BossWaitingForPlayers") or proj:FindFirstChild("WaitingForPlayers")
+                                elseif map:FindFirstChild("RaidLootChest") or map:FindFirstChild("LootChest") and not player.PlayerGui.DungeonClear.LootContainer.Visible then
+                                    mob = map.RaidLootChest.PrimaryPart or map.LootChest.PrimaryPart
+                                end
+
+                            vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+                            if mob and hasHumanoid(character) and mob.Parent then
+
+                                for _,v in pairs(map:GetChildren()) do
+                                    if v.Name:find("Gate") then
+                                        v:Destroy()
+                                    end
+                                end
+                
+                                for _,v in pairs(map.Segments:GetDescendants()) do
+                                    if v:IsA("BasePart") and v.Transparency < 1 and (v.Parent.Name == "Balustrade1_Angled_Variant1" or v.Parent.Name == "Balustrade1_Straight_Variant2" or not v.Name:find("Wall") and not v.Name:find("Bricks") and not v.Name:find("Floor") and not v.Parent.Name:find("Floor") and not v.Name:lower():find("coin")) then
+                                        v.CanCollide    = false
+                                    end
+                                end
+                
+                                if map:FindFirstChild("Forcefield") then
+                                    for _,v in pairs(map.Forcefield:GetChildren()) do
+                                        v:Destroy()
+                                    end
+                                end
+
+
+                                    local path = pf:CreatePath({
+                                        AgentRadius = 2,
+                                        AgentHeight = 4,
+                                        AgentCanJump = true,
+                                        WaypointSpacing = 4.7,
+                                    })
+                                    local og = mob.CFrame.Position
+
+                                    print(mob)
+
+                                    path:ComputeAsync(character.HumanoidRootPart.CFrame.Position, og)
+
+                                    if path.Status and path.Status == Enum.PathStatus.Success then
+                                        path  = path:GetWaypoints()
+                
+                
+                                        for i,v in pairs(path) do
+                                            if i > 1 then
+                                                local newMove   = v.Position+Vector3.new(0, 2.5, 0)
+                                                local attempts  = 0
+                                                local maxAttempts   = 18
+                                                local jumpDeb   = tick()
+                                                
+                                                if _G.settings.autoDungeon then
+                                                    repeat
+                                                        task.wait(0.05)
+                                                        attempts += 1
+                
+                                                        if path[i+2] then
+                                                            aht = path[i+2].Position
+                                                        else
+                                                            aht = newMove
+                                                        end
+                                                        if (v.Action == Enum.PathWaypointAction.Jump or attempts >= math.floor(maxAttempts/1.25)) and tick()-jumpDeb >= 0.3 then
+                                                            jumpDeb = tick()
+                                                            character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                                                        end
+                                                        character.Humanoid.MaxSlopeAngle = 89.9
+                                                        character.Humanoid:MoveTo(newMove)
+                
+
+                                                    until not _G.settings.autoDungeon or attempts >= maxAttempts or (character.HumanoidRootPart.CFrame.Position-newMove).magnitude <= 3 or not mob or not mob.Parent or mob.Parent:FindFirstChild("Humanoid") and mob.Parent.Humanoid.Health <= 0 or (mob.CFrame.Position-og).magnitude >= 5
+                                                
+                                                end
+                                                
+                                                if not _G.settings.autoDungeon or mob and mob.Parent and mob.Parent:FindFirstChild("Humanoid") and mob ~= getNearestMob(character.HumanoidRootPart.CFrame.Position) or not mob or not mob.Parent or mob.Parent:FindFirstChild("Humanoid") and mob.Parent.Humanoid.Health <= 0 or attempts >= maxAttempts or (mob.CFrame.Position-og
+                                            ).magnitude >= 5 or i >= 3 then
+                                                    break
+                                                end
+                                            end
+                                        end
+
+                                    else
+                                        print("notworking")
+                                        flyTo(newMove)
+                                    end
+                                end
+                    end
+                end)
+            end 
+            
+    end
+    ]]
+
+
+
+
+    -- SETTINGS GETTING LOADED
+
+    loadsettings()
+
+    if _G.settings.nameSpoof then
+        nameSpoof()
+    end
+
+
+
+    -- Gui to Lua
+    -- Version: 3.2
+
+    -- Instances:
+
+    local VentureTale = Instance.new("ScreenGui")
+    local Main = Instance.new("Frame")
+    local SectionsTab = Instance.new("Frame")
+    local Dungeon = Instance.new("TextButton")
+    local S = Instance.new("Frame")
+    local UIGridLayout = Instance.new("UIGridLayout")
+    local UIPadding = Instance.new("UIPadding")
+    local Settings = Instance.new("TextButton")
+    local S_2 = Instance.new("Frame")
+    local Sections = Instance.new("Frame")
+    local Dungeon_2 = Instance.new("Frame")
+    local TabName = Instance.new("TextLabel")
+    local DungeonMap = Instance.new("Frame")
+    local DungeonMapToggle = Instance.new("TextButton")
+    local Dungeons = Instance.new("Frame")
+    local UIGridLayout_2 = Instance.new("UIGridLayout")
+    local GoblinCave = Instance.new("TextButton")
+    local EnchantedForest = Instance.new("TextButton")
+    local BanditCastle = Instance.new("TextButton")
+    local UIPadding_2 = Instance.new("UIPadding")
+    local DungeonToggled = Instance.new("TextLabel")
+    local Map = Instance.new("TextLabel")
+    local DungeonMode = Instance.new("Frame")
+    local DungeonModeToggle = Instance.new("TextButton")
+    local DungeonMode_2 = Instance.new("Frame")
+    local UIGridLayout_3 = Instance.new("UIGridLayout")
+    local Easy = Instance.new("TextButton")
+    local Normal = Instance.new("TextButton")
+    local Hard = Instance.new("TextButton")
+    local UIPadding_3 = Instance.new("UIPadding")
+    local Raid = Instance.new("TextButton")
+    local Endless = Instance.new("TextButton")
+    local DungeonModeToggled = Instance.new("TextLabel")
+    local Mode = Instance.new("TextLabel")
+    local AutoDungeon = Instance.new("Frame")
+    local AutoDungeonToggle = Instance.new("TextButton")
+    local FeatureName = Instance.new("TextLabel")
+    local Settings_2 = Instance.new("Frame")
+    local TabName_2 = Instance.new("TextLabel")
+    local WeebhookURLFrame = Instance.new("Frame")
+    local TextBox = Instance.new("TextBox")
+    local webhookURL = Instance.new("TextLabel")
+    local NameSpoof = Instance.new("Frame")
+    local AutoDungeonToggle_2 = Instance.new("TextButton")
+    local FeatureName_2 = Instance.new("TextLabel")
+    local Webhook = Instance.new("Frame")
+    local WebhookToggle = Instance.new("TextButton")
+    local FeatureName_3 = Instance.new("TextLabel")
+    local HubName = Instance.new("TextLabel")
+    local Exit = Instance.new("TextButton")
+
+    --Properties:
+
+    VentureTale.Name = "VentureTale"
+    VentureTale.Parent = game:GetService("CoreGui")
+
+    Main.Name = "Main"
+    Main.Parent = VentureTale
+    Main.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    Main.BorderSizePixel = 0
+    Main.Position = UDim2.new(0.570966601, 0, 0.0975120515, 0)
+    Main.Size = UDim2.new(0, 620, 0, 320)
+
+    SectionsTab.Name = "SectionsTab"
+    SectionsTab.Parent = Main
+    SectionsTab.BackgroundColor3 = Color3.fromRGB(34, 33, 50)
+    SectionsTab.BorderSizePixel = 0
+    SectionsTab.Position = UDim2.new(0.00967741944, 0, 0.0593750477, 0)
+    SectionsTab.Size = UDim2.new(-0.00741936453, 136, 0.922000051, 0)
+    SectionsTab.ZIndex = 10
+
+    Dungeon.Name = "Dungeon"
+    Dungeon.Parent = SectionsTab
+    Dungeon.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Dungeon.BackgroundTransparency = 1.000
+    Dungeon.Position = UDim2.new(0, 0, 0.108984336, 0)
+    Dungeon.Size = UDim2.new(0, 129, 0, 31)
+    Dungeon.ZIndex = 10
+    Dungeon.Font = Enum.Font.GothamBold
+    Dungeon.Text = "Dungeon"
+    Dungeon.TextColor3 = Color3.fromRGB(220, 220, 220)
+    Dungeon.TextSize = 17.000
+    Dungeon.TextWrapped = true
+
+    S.Name = "S"
+    S.Parent = Dungeon
+    S.BackgroundColor3 = Color3.fromRGB(199, 172, 255)
+    S.BorderSizePixel = 0
+    S.Position = UDim2.new(0.103494823, 0, 0.159999996, 0)
+    S.Size = UDim2.new(0, 5, 0, 20)
+    S.ZIndex = 11
+
+    UIGridLayout.Parent = SectionsTab
+    UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout.CellSize = UDim2.new(0, 129, 0, 31)
+
+    UIPadding.Parent = SectionsTab
+    UIPadding.PaddingTop = UDim.new(0, 20)
+
+    Settings.Name = "Settings"
+    Settings.Parent = SectionsTab
+    Settings.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Settings.BackgroundTransparency = 1.000
+    Settings.Position = UDim2.new(0, 0, 0.108984336, 0)
+    Settings.Size = UDim2.new(0, 129, 0, 31)
+    Settings.ZIndex = 10
+    Settings.Font = Enum.Font.GothamBold
+    Settings.Text = "Settings"
+    Settings.TextColor3 = Color3.fromRGB(220, 220, 220)
+    Settings.TextSize = 17.000
+    Settings.TextWrapped = true
+
+    S_2.Name = "S"
+    S_2.Parent = Settings
+    S_2.BackgroundColor3 = Color3.fromRGB(199, 172, 255)
+    S_2.BorderSizePixel = 0
+    S_2.Position = UDim2.new(0.103494823, 0, 0.159999996, 0)
+    S_2.Size = UDim2.new(0, 5, 0, 20)
+    S_2.Visible = false
+    S_2.ZIndex = 11
+
+    Sections.Name = "Sections"
+    Sections.Parent = Main
+    Sections.BackgroundColor3 = Color3.fromRGB(34, 33, 50)
+    Sections.BorderSizePixel = 0
+    Sections.Position = UDim2.new(0.230000004, 0, 0.0590000004, 0)
+    Sections.Size = UDim2.new(0.541000009, 136, 0.921999991, 0)
+
+    Dungeon_2.Name = "Dungeon"
+    Dungeon_2.Parent = Sections
+    Dungeon_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Dungeon_2.BackgroundTransparency = 1.000
+    Dungeon_2.Size = UDim2.new(1, 0, 1, 0)
+
+    TabName.Name = "TabName"
+    TabName.Parent = Dungeon_2
+    TabName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TabName.BackgroundTransparency = 1.000
+    TabName.Position = UDim2.new(0.021212507, 0, 0.0135574834, 0)
+    TabName.Size = UDim2.new(0, 103, 0, 20)
+    TabName.ZIndex = 10
+    TabName.Font = Enum.Font.GothamBlack
+    TabName.Text = "Dungeon Tab"
+    TabName.TextColor3 = Color3.fromRGB(255, 255, 232)
+    TabName.TextSize = 14.000
+    TabName.TextXAlignment = Enum.TextXAlignment.Left
+
+    DungeonMap.Name = "DungeonMap"
+    DungeonMap.Parent = Dungeon_2
+    DungeonMap.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonMap.BorderSizePixel = 0
+    DungeonMap.Position = UDim2.new(0.021212507, 0, 0.288096458, 0)
+    DungeonMap.Size = UDim2.new(0, 455, 0, 38)
+    DungeonMap.ZIndex = 8
+
+    DungeonMapToggle.Name = "DungeonMapToggle"
+    DungeonMapToggle.Parent = DungeonMap
+    DungeonMapToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonMapToggle.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    DungeonMapToggle.BorderSizePixel = 2
+    DungeonMapToggle.Position = UDim2.new(0.397802204, 0, 0.272495866, 0)
+    DungeonMapToggle.Size = UDim2.new(0, 266, 0, 20)
+    DungeonMapToggle.ZIndex = 10
+    DungeonMapToggle.Font = Enum.Font.SourceSans
+    DungeonMapToggle.Text = ""
+    DungeonMapToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    DungeonMapToggle.TextSize = 14.000
+
+    Dungeons.Name = "Dungeons"
+    Dungeons.Parent = DungeonMapToggle
+    Dungeons.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    Dungeons.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    Dungeons.BorderSizePixel = 2
+    Dungeons.Position = UDim2.new(0, 0, 1.19999766, 0)
+    Dungeons.Size = UDim2.new(1, 0, -1.29999852, 100)
+    Dungeons.Visible = false
+    Dungeons.ZIndex = 10
+
+    UIGridLayout_2.Parent = Dungeons
+    UIGridLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout_2.CellSize = UDim2.new(1, 0, 0, 18)
+
+    GoblinCave.Name = "Goblin Cave"
+    GoblinCave.Parent = Dungeons
+    GoblinCave.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    GoblinCave.BackgroundTransparency = 0.850
+    GoblinCave.Size = UDim2.new(0, 200, 0, 50)
+    GoblinCave.ZIndex = 10
+    GoblinCave.Font = Enum.Font.GothamBlack
+    GoblinCave.Text = "Goblin Cave"
+    GoblinCave.TextColor3 = Color3.fromRGB(189, 189, 189)
+    GoblinCave.TextSize = 14.000
+    GoblinCave.TextWrapped = true
+
+    EnchantedForest.Name = "Enchanted Forest"
+    EnchantedForest.Parent = Dungeons
+    EnchantedForest.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    EnchantedForest.BackgroundTransparency = 0.850
+    EnchantedForest.Size = UDim2.new(0, 200, 0, 50)
+    EnchantedForest.ZIndex = 10
+    EnchantedForest.Font = Enum.Font.GothamBlack
+    EnchantedForest.Text = "Enchanted Forest"
+    EnchantedForest.TextColor3 = Color3.fromRGB(189, 189, 189)
+    EnchantedForest.TextSize = 14.000
+    EnchantedForest.TextWrapped = true
+
+    BanditCastle.Name = "Bandit Castle"
+    BanditCastle.Parent = Dungeons
+    BanditCastle.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    BanditCastle.BackgroundTransparency = 0.850
+    BanditCastle.Position = UDim2.new(0.0112781953, 0, 0.499999791, 0)
+    BanditCastle.Size = UDim2.new(0, 200, 0, 50)
+    BanditCastle.ZIndex = 10
+    BanditCastle.Font = Enum.Font.GothamBlack
+    BanditCastle.Text = "Bandit Castle"
+    BanditCastle.TextColor3 = Color3.fromRGB(189, 189, 189)
+    BanditCastle.TextSize = 14.000
+    BanditCastle.TextWrapped = true
+
+    UIPadding_2.Parent = Dungeons
+    UIPadding_2.PaddingTop = UDim.new(0, 5)
+
+    DungeonToggled.Name = "DungeonToggled"
+    DungeonToggled.Parent = DungeonMapToggle
+    DungeonToggled.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    DungeonToggled.BackgroundTransparency = 1.000
+    DungeonToggled.Position = UDim2.new(0.0298102982, 0, 0, 0)
+    DungeonToggled.Size = UDim2.new(0.970189691, 0, 1, 0)
+    DungeonToggled.ZIndex = 10
+    DungeonToggled.Font = Enum.Font.GothamBlack
+    DungeonToggled.Text = ""
+    DungeonToggled.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DungeonToggled.TextSize = 14.000
+    DungeonToggled.TextXAlignment = Enum.TextXAlignment.Left
+
+    Map.Name = "Map"
+    Map.Parent = DungeonMap
+    Map.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Map.BackgroundTransparency = 1.000
+    Map.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    Map.Size = UDim2.new(0, 200, 1, 0)
+    Map.ZIndex = 10
+    Map.Font = Enum.Font.GothamBlack
+    Map.Text = "Map"
+    Map.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Map.TextSize = 14.000
+    Map.TextXAlignment = Enum.TextXAlignment.Left
+
+    DungeonMode.Name = "DungeonMode"
+    DungeonMode.Parent = Dungeon_2
+    DungeonMode.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonMode.BorderSizePixel = 0
+    DungeonMode.Position = UDim2.new(0.021212507, 0, 0.45756501, 0)
+    DungeonMode.Size = UDim2.new(0, 455, 0, 38)
+    DungeonMode.ZIndex = 8
+
+    DungeonModeToggle.Name = "DungeonModeToggle"
+    DungeonModeToggle.Parent = DungeonMode
+    DungeonModeToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonModeToggle.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    DungeonModeToggle.BorderSizePixel = 2
+    DungeonModeToggle.Position = UDim2.new(0.397802204, 0, 0.272495866, 0)
+    DungeonModeToggle.Size = UDim2.new(0, 266, 0, 20)
+    DungeonModeToggle.ZIndex = 8
+    DungeonModeToggle.Font = Enum.Font.SourceSans
+    DungeonModeToggle.Text = ""
+    DungeonModeToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    DungeonModeToggle.TextSize = 14.000
+
+    DungeonMode_2.Name = "DungeonMode"
+    DungeonMode_2.Parent = DungeonModeToggle
+    DungeonMode_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    DungeonMode_2.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    DungeonMode_2.BorderSizePixel = 2
+    DungeonMode_2.Position = UDim2.new(0, 0, 1.19999766, 0)
+    DungeonMode_2.Size = UDim2.new(1, 0, 0.650001526, 100)
+    DungeonMode_2.Visible = false
+    DungeonMode_2.ZIndex = 10
+
+    UIGridLayout_3.Parent = DungeonMode_2
+    UIGridLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+    UIGridLayout_3.CellSize = UDim2.new(1, 0, 0, 18)
+
+    Easy.Name = "Easy"
+    Easy.Parent = DungeonMode_2
+    Easy.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Easy.BackgroundTransparency = 0.850
+    Easy.Size = UDim2.new(0, 200, 0, 50)
+    Easy.ZIndex = 10
+    Easy.Font = Enum.Font.GothamBlack
+    Easy.Text = "Goblin Cave"
+    Easy.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Easy.TextSize = 14.000
+    Easy.TextWrapped = true
+
+    Normal.Name = "Normal"
+    Normal.Parent = DungeonMode_2
+    Normal.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Normal.BackgroundTransparency = 0.850
+    Normal.Size = UDim2.new(0, 200, 0, 50)
+    Normal.ZIndex = 10
+    Normal.Font = Enum.Font.GothamBlack
+    Normal.Text = "Enchanted Forest"
+    Normal.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Normal.TextSize = 14.000
+    Normal.TextWrapped = true
+
+    Hard.Name = "Hard"
+    Hard.Parent = DungeonMode_2
+    Hard.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Hard.BackgroundTransparency = 0.850
+    Hard.Position = UDim2.new(0.0112781953, 0, 0.499999791, 0)
+    Hard.Size = UDim2.new(0, 200, 0, 50)
+    Hard.ZIndex = 10
+    Hard.Font = Enum.Font.GothamBlack
+    Hard.Text = "Bandit Castle"
+    Hard.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Hard.TextSize = 14.000
+    Hard.TextWrapped = true
+
+    UIPadding_3.Parent = DungeonMode_2
+    UIPadding_3.PaddingTop = UDim.new(0, 5)
+
+    Raid.Name = "Raid"
+    Raid.Parent = DungeonMode_2
+    Raid.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Raid.BackgroundTransparency = 0.850
+    Raid.Size = UDim2.new(0, 200, 0, 50)
+    Raid.ZIndex = 10
+    Raid.Font = Enum.Font.GothamBlack
+    Raid.Text = "Goblin Cave"
+    Raid.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Raid.TextSize = 14.000
+    Raid.TextWrapped = true
+
+    Endless.Name = "Endless"
+    Endless.Parent = DungeonMode_2
+    Endless.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Endless.BackgroundTransparency = 0.850
+    Endless.Size = UDim2.new(0, 200, 0, 50)
+    Endless.ZIndex = 10
+    Endless.Font = Enum.Font.GothamBlack
+    Endless.Text = "Goblin Cave"
+    Endless.TextColor3 = Color3.fromRGB(189, 189, 189)
+    Endless.TextSize = 14.000
+    Endless.TextWrapped = true
+
+    DungeonModeToggled.Name = "DungeonModeToggled"
+    DungeonModeToggled.Parent = DungeonModeToggle
+    DungeonModeToggled.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    DungeonModeToggled.BackgroundTransparency = 1.000
+    DungeonModeToggled.Position = UDim2.new(0.0298102982, 0, 0, 0)
+    DungeonModeToggled.Size = UDim2.new(0.970189691, 0, 1, 0)
+    DungeonModeToggled.ZIndex = 8
+    DungeonModeToggled.Font = Enum.Font.GothamBlack
+    DungeonModeToggled.Text = ""
+    DungeonModeToggled.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DungeonModeToggled.TextSize = 14.000
+    DungeonModeToggled.TextXAlignment = Enum.TextXAlignment.Left
+
+    Mode.Name = "Mode"
+    Mode.Parent = DungeonMode
+    Mode.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Mode.BackgroundTransparency = 1.000
+    Mode.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    Mode.Size = UDim2.new(0, 200, 1, 0)
+    Mode.ZIndex = 8
+    Mode.Font = Enum.Font.GothamBlack
+    Mode.Text = "Mode"
+    Mode.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Mode.TextSize = 14.000
+    Mode.TextXAlignment = Enum.TextXAlignment.Left
+
+    AutoDungeon.Name = "AutoDungeon"
+    AutoDungeon.Parent = Dungeon_2
+    AutoDungeon.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    AutoDungeon.BorderSizePixel = 0
+    AutoDungeon.Position = UDim2.new(0.021212507, 0, 0.122017272, 0)
+    AutoDungeon.Size = UDim2.new(0, 455, 0, 38)
+    AutoDungeon.ZIndex = 8
+
+    AutoDungeonToggle.Name = "AutoDungeonToggle"
+    AutoDungeonToggle.Parent = AutoDungeon
+    AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    AutoDungeonToggle.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    AutoDungeonToggle.BorderSizePixel = 2
+    AutoDungeonToggle.Position = UDim2.new(0.938461542, 0, 0.272495747, 0)
+    AutoDungeonToggle.Size = UDim2.new(0, 20, 0, 20)
+    AutoDungeonToggle.ZIndex = 8
+    AutoDungeonToggle.Font = Enum.Font.SourceSans
+    AutoDungeonToggle.Text = ""
+    AutoDungeonToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    AutoDungeonToggle.TextSize = 14.000
+
+    FeatureName.Name = "FeatureName"
+    FeatureName.Parent = AutoDungeon
+    FeatureName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName.BackgroundTransparency = 1.000
+    FeatureName.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    FeatureName.Size = UDim2.new(0, 200, 1, 0)
+    FeatureName.ZIndex = 10
+    FeatureName.Font = Enum.Font.GothamBlack
+    FeatureName.Text = "Auto Dungeon"
+    FeatureName.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName.TextSize = 14.000
+    FeatureName.TextXAlignment = Enum.TextXAlignment.Left
+
+    Settings_2.Name = "Settings"
+    Settings_2.Parent = Sections
+    Settings_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Settings_2.BackgroundTransparency = 1.000
+    Settings_2.Size = UDim2.new(1, 0, 1, 0)
+    Settings_2.Visible = false
+
+    TabName_2.Name = "TabName"
+    TabName_2.Parent = Settings_2
+    TabName_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TabName_2.BackgroundTransparency = 1.000
+    TabName_2.Position = UDim2.new(0.021212507, 0, 0.0135574834, 0)
+    TabName_2.Size = UDim2.new(0, 103, 0, 20)
+    TabName_2.ZIndex = 10
+    TabName_2.Font = Enum.Font.GothamBlack
+    TabName_2.Text = "Settings Tab"
+    TabName_2.TextColor3 = Color3.fromRGB(255, 255, 232)
+    TabName_2.TextSize = 14.000
+    TabName_2.TextXAlignment = Enum.TextXAlignment.Left
+
+    WeebhookURLFrame.Name = "WeebhookURLFrame"
+    WeebhookURLFrame.Parent = Settings_2
+    WeebhookURLFrame.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    WeebhookURLFrame.BorderSizePixel = 0
+    WeebhookURLFrame.Position = UDim2.new(0.021212507, 0, 0.288096458, 0)
+    WeebhookURLFrame.Size = UDim2.new(0, 455, 0, 38)
+    WeebhookURLFrame.ZIndex = 8
+
+    TextBox.Parent = WeebhookURLFrame
+    TextBox.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    TextBox.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    TextBox.BorderSizePixel = 2
+    TextBox.Position = UDim2.new(0.398000002, 0, 0.272000015, 0)
+    TextBox.Size = UDim2.new(0, 266, 0, 20)
+    TextBox.ZIndex = 10
+    TextBox.Font = Enum.Font.GothamBlack
+    TextBox.Text = "URL here"
+    TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextBox.TextSize = 14.000
+    TextBox.TextWrapped = true
+
+    webhookURL.Name = "webhookURL"
+    webhookURL.Parent = WeebhookURLFrame
+    webhookURL.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    webhookURL.BackgroundTransparency = 1.000
+    webhookURL.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    webhookURL.Size = UDim2.new(0, 200, 1, 0)
+    webhookURL.ZIndex = 10
+    webhookURL.Font = Enum.Font.GothamBlack
+    webhookURL.Text = "Webhook URL"
+    webhookURL.TextColor3 = Color3.fromRGB(255, 255, 255)
+    webhookURL.TextSize = 14.000
+    webhookURL.TextXAlignment = Enum.TextXAlignment.Left
+
+    NameSpoof.Name = "NameSpoof"
+    NameSpoof.Parent = Settings_2
+    NameSpoof.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    NameSpoof.BorderSizePixel = 0
+    NameSpoof.Position = UDim2.new(0.021212507, 0, 0.122017272, 0)
+    NameSpoof.Size = UDim2.new(0, 455, 0, 38)
+    NameSpoof.ZIndex = 8
+
+    AutoDungeonToggle_2.Name = "AutoDungeonToggle"
+    AutoDungeonToggle_2.Parent = NameSpoof
+    AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    AutoDungeonToggle_2.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    AutoDungeonToggle_2.BorderSizePixel = 2
+    AutoDungeonToggle_2.Position = UDim2.new(0.938461542, 0, 0.272495747, 0)
+    AutoDungeonToggle_2.Size = UDim2.new(0, 20, 0, 20)
+    AutoDungeonToggle_2.ZIndex = 8
+    AutoDungeonToggle_2.Font = Enum.Font.SourceSans
+    AutoDungeonToggle_2.Text = ""
+    AutoDungeonToggle_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+    AutoDungeonToggle_2.TextSize = 14.000
+
+    FeatureName_2.Name = "FeatureName"
+    FeatureName_2.Parent = NameSpoof
+    FeatureName_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName_2.BackgroundTransparency = 1.000
+    FeatureName_2.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    FeatureName_2.Size = UDim2.new(0, 200, 1, 0)
+    FeatureName_2.ZIndex = 10
+    FeatureName_2.Font = Enum.Font.GothamBlack
+    FeatureName_2.Text = "Name Spoofer"
+    FeatureName_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName_2.TextSize = 14.000
+    FeatureName_2.TextXAlignment = Enum.TextXAlignment.Left
+
+    Webhook.Name = "Webhook"
+    Webhook.Parent = Settings_2
+    Webhook.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    Webhook.BorderSizePixel = 0
+    Webhook.Position = UDim2.new(0.021212507, 0, 0.454175591, 0)
+    Webhook.Size = UDim2.new(0, 455, 0, 38)
+    Webhook.ZIndex = 8
+
+    WebhookToggle.Name = "WebhookToggle"
+    WebhookToggle.Parent = Webhook
+    WebhookToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    WebhookToggle.BorderColor3 = Color3.fromRGB(34, 33, 50)
+    WebhookToggle.BorderSizePixel = 2
+    WebhookToggle.Position = UDim2.new(0.938461542, 0, 0.272495747, 0)
+    WebhookToggle.Size = UDim2.new(0, 20, 0, 20)
+    WebhookToggle.ZIndex = 8
+    WebhookToggle.Font = Enum.Font.SourceSans
+    WebhookToggle.Text = ""
+    WebhookToggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+    WebhookToggle.TextSize = 14.000
+
+    FeatureName_3.Name = "FeatureName"
+    FeatureName_3.Parent = Webhook
+    FeatureName_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName_3.BackgroundTransparency = 1.000
+    FeatureName_3.Position = UDim2.new(0.0241758246, 0, 0, 0)
+    FeatureName_3.Size = UDim2.new(0, 200, 1, 0)
+    FeatureName_3.ZIndex = 10
+    FeatureName_3.Font = Enum.Font.GothamBlack
+    FeatureName_3.Text = "Webhook"
+    FeatureName_3.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureName_3.TextSize = 14.000
+    FeatureName_3.TextXAlignment = Enum.TextXAlignment.Left
+
+    HubName.Name = "HubName"
+    HubName.Parent = Main
+    HubName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    HubName.BackgroundTransparency = 1.000
+    HubName.Position = UDim2.new(0.00967741944, 0, 0, 0)
+    HubName.Size = UDim2.new(0, 200, 0, 19)
+    HubName.ZIndex = 10
+    HubName.Font = Enum.Font.GothamBlack
+    HubName.Text = "Chopper Hub - Venture Tale"
+    HubName.TextColor3 = Color3.fromRGB(220, 220, 220)
+    HubName.TextSize = 14.000
+    HubName.TextXAlignment = Enum.TextXAlignment.Left
+
+    Exit.Name = "Exit"
+    Exit.Parent = Main
+    Exit.BackgroundColor3 = Color3.fromRGB(255, 102, 75)
+    Exit.BorderSizePixel = 0
+    Exit.Position = UDim2.new(0.979032218, 0, 0.0125000002, 0)
+    Exit.Size = UDim2.new(0, 10, 0, 10)
+    Exit.ZIndex = 3
+    Exit.Font = Enum.Font.SourceSans
+    Exit.Text = ""
+    Exit.TextColor3 = Color3.fromRGB(0, 0, 0)
+    Exit.TextSize = 14.000
+
+    -- gui settings
+
+    if _G.settings.autoDungeon then
+        AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+    else
+        AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    end
+
+    if _G.settings.dungeonSelected then
+        DungeonToggled.Text = _G.settings.dungeonSelected
+    else
+        DungeonToggled.Text = ""
+    end
+
+    if _G.settings.dungeonModeSelected then
+        DungeonModeToggled.Text = _G.settings.dungeonModeSelected
+    else
+        DungeonModeToggled.Text = ""
+    end
+
+    if _G.settings.webhookURL then
+        TextBox.Text = _G.settings.webhookURL
+    else
+        TextBox.Text = ""
+    end
+
+    if _G.settings.webhook then
+        WebhookToggle.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+    else
+        WebhookToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    end
+
+    if _G.settings.nameSpoof then
+        AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+    else
+        AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+    end
+
+
+
+
+    function webhook()
+        local cleared = player.PlayerGui.DungeonClear.DungeonClearLabel.ImageLabel
+        local gold = player.PlayerGui.DungeonClear.LootContainer.Loot.Contents.Rewards:WaitForChild("Gold").AmtLabel
+        local cl = ""
+
+        if cleared.Image == "rbxassetid://5966925163" then
+            cl = "Victory"
+        else
+            cl = "Defeat"
+        end
+
+        local dungeonName = _G.settings.dungeonSelected
+
+        print(cl)
+
+        local url =  _G.settings.webhookURL
+        local data = {
+            ["embeds"] = {
+                {
+                    ["title"] = "**"..cl.." - ".._G.settings.dungeonSelected.." **",
+                    ["description"] = "**Username: **" .. game.Players.LocalPlayer.Name.. "\n **Gold:  **" ..gold.Text.."",
+                    ["type"] = "rich",
+                    ["color"] = tonumber(0xa3f0eb),
+                    ["footer"] = {
+                        ["text"] = "Chopper Hub"
+                    }
+                    
+                }
+            }
+        }
+        local newdata = game:GetService("HttpService"):JSONEncode(data)
+
+        local headers = {
+        ["content-type"] = "application/json"
+        }
+        if _G.settings.webhookURL ~= nil then
+            request = syn.request
+            local abcdef = {Url = _G.settings.webhookURL, Body = newdata, Method = "POST", Headers = headers}
+            request(abcdef)
+        end
+
+
+    end
+
+
+
+
+
+
+
+
+    --- MAIN Gui
+
+    Main.Draggable = true
+    Main.Selectable = true
+    Main.Active = true
+
+    Exit.MouseButton1Click:connect(function()
+        VentureTale:Destroy()
+    end)
+
+    -- BUTTONS 
+
+
+
+
+    -- SECTIONS TAB
+
+    for i,v in pairs(SectionsTab:GetChildren()) do
+        if v:IsA("TextButton") then
+            
+            v.MouseEnter:Connect(function()
+                print(v)
+                t:Create(v, TweenInfo.new(.3), {BackgroundTransparency = 0.9 } ):Play()	
+            end)
+            v.MouseLeave:Connect(function()
+                print(v)
+                t:Create(v, TweenInfo.new(.3), {BackgroundTransparency = 1 } ):Play()
+            end)
+            
+            v.MouseButton1Click:Connect(function()
+                for i2,v2 in pairs(SectionsTab:GetChildren()) do
+                    if v2:IsA("TextButton") then
+                        v2.S.Visible = false
+                        Sections:FindFirstChild(v2.Name).Visible = false
+                        v.S.Visible = true
+                        Sections:FindFirstChild(v.Name).Visible = true
+                    end
+                end
+            end)
+            
+        end
+    end
+
+
+
+
+    -- AUTO DUNGEON TOGGLE
+
+
+    AutoDungeonToggle.MouseButton1Click:Connect(function()
+        _G.settings.autoDungeon = not _G.settings.autoDungeon
+        saveSettings()
+        if _G.settings.autoDungeon then
+            --autoMob()
+            AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+        else
+            AutoDungeonToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+        end
+        
+        
+    end)
+
+
+
+
+
+    --- DUNGEON Name
+
+    DungeonMapToggle.MouseButton1Up:Connect(function()
+
+        Dungeons.Visible = not Dungeons.Visible
+
+    end)
+
+
+
+
+    for	i,v in pairs(Dungeons:GetChildren()) do
+        if v:IsA("TextButton") then
+            
+            v.MouseButton1Up:Connect(function()
+
+                    if v:IsA("TextButton") then
+                        _G.settings.dungeonSelected = v.Name
+                        saveSettings()
+                        DungeonToggled.Text = v.Text
+                    end
+                    
+                    
+                    
+            end)
+            
+            
+        end
+
+    end
+
+    -- DUNGEON MODE
+
+    DungeonModeToggle.MouseButton1Up:Connect(function()
+
+        DungeonMode_2.Visible = not DungeonMode_2.Visible
+
+    end)
+
+
+
+
+    for	i,v in pairs(DungeonMode_2:GetChildren()) do
+        if v:IsA("TextButton") then
+            v.Text = v.Name
+            v.MouseButton1Up:Connect(function()
+
+                    if v:IsA("TextButton") then
+                        _G.settings.dungeonModeSelected = v.Name
+                        saveSettings()
+                        DungeonModeToggled.Text = v.Text
+                    end
+                    
+                    
+                    
+            end)
+            
+            
+        end
+
+    end
+
+
+    ---- WEBHOOK URL
+
+    TextBox.FocusLost:Connect(function(enter)
+        if enter then
+            _G.settings.webhookURL = TextBox.Text
+            saveSettings()
+        end
+    end)
+
+    ---- WEBHOOK TOGGLE
+
+
+    WebhookToggle.MouseButton1Up:Connect(function()
+        _G.settings.webhook = not _G.settings.webhook
+        saveSettings()
+        if _G.settings.webhook then
+            
+            WebhookToggle.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+        else
+            WebhookToggle.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+        end
+    end)
+
+
+    --- NAMESPOOF TOGGLE
+
+
+    AutoDungeonToggle_2.MouseButton1Up:Connect(function()
+        _G.settings.nameSpoof = not _G.settings.nameSpoof
+        saveSettings()
+        if _G.settings.nameSpoof then
+            nameSpoof()
+            AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(86, 85, 130)
+        else
+            AutoDungeonToggle_2.BackgroundColor3 = Color3.fromRGB(54, 53, 81)
+        end
+    end)
+
+
+
+
+
+
+
+
+    ----
+
+    local ScriptContext = game:GetService("ScriptContext")
+
+    for i,v in pairs(getconnections(player.Idled)) do
+        v:Disable()
+    end
+    ScriptContext:SetTimeout(2)
+
+
+    if _G.settings.autoDungeon == true then
+        while rs.RenderStepped:Wait() do
+            pcall(function()
+                if player.Character:FindFirstChild("HumanoidRootPart") then
+                    local myTarget  = getNearestMob(player.Character.HumanoidRootPart.CFrame.Position)
+
+                    if proj:FindFirstChild("WaitingForPlayers") or proj:FindFirstChild("BossWaitingForPlayers") or Map:FindFirstChild("LootChest") and not player.PlayerGui.DungeonClear.LootContainer.Visible then
+                        myTarget    = proj:FindFirstChild("WaitingForPlayers") and proj["WaitingForPlayers"] or proj:FindFirstChild("BossWaitingForPlayers") and proj["BossWaitingForPlayers"] or Map["LootChest"].PrimaryPart
+                        print(myTarget)
+                        if myTarget and myTarget.Parent and myTarget.Parent.Name == "LootChest" then
+                            print("webhhok")
+                            webhook()
+                        end
+                    end
+
+                    if myTarget and hasHumanoid(player.Character) and myTarget.Parent then
+                        print(myTarget.Parent)
+
+                        for _,v in pairs(map.Segments:GetDescendants()) do
+                            if v:IsA("BasePart") and v.Transparency < 1 and not v.Name:find("Wall") and not v.Name:find("Bricks") and not v.Name:find("Floor") and not v.Parent.Name:find("Floor") and not v.Name:lower():find("coin") then
+                                v.CanCollide    = false
+                            end
+                        end
+
+                        if map:FindFirstChild("Forcefield") then
+                            for _,v in pairs(map.Forcefield:GetChildren()) do
+                                v:Destroy()
+                            end
+                        end
+
+                        local myPath    = pf:CreatePath({
+                            AgentRadius = 2,
+                            AgentHeight = 4,
+                            AgentCanJump = true,
+                            WaypointSpacing = 4.75,
+                        })
+                        local originPath    = myTarget.CFrame.Position
+
+                        
+                            myPath:ComputeAsync(player.Character.HumanoidRootPart.CFrame.Position, originPath)
+
+                            if myPath.Status and myPath.Status == Enum.PathStatus.Success then
+                                vim:SendMouseButtonEvent(0, 0, 0, true, game, 1)
+                                myPath  = myPath:GetWaypoints()
+
+
+                                for i,v in pairs(myPath) do
+                                    if i > 1 then
+                                        
+                                        local newMove   = v.Position+Vector3.new(0, 2.5, 0)
+                                        local attempts  = 0
+                                        local maxAttempts   = 18
+                                        local jumpDeb   = tick()
+
+                                        
+                                            repeat 
+                                                task.wait(0.05)
+                                                attempts    += 1
+
+                                                if myPath[i+2] then
+                                                    aht   = myPath[i+2].Position
+                                                else
+                                                    aht   = newMove
+                                                end
+                                                if (v.Action == Enum.PathWaypointAction.Jump or attempts >= math.floor(maxAttempts/1.25)) and tick()-jumpDeb >= 0.3 then
+                                                    jumpDeb = tick()
+                                                    player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                                                end
+                                                player.Character.Humanoid.MaxSlopeAngle = 89.9
+                                                player.Character.Humanoid:MoveTo(newMove)
+
+                                                if not GameUI.Dash.CooldownLabel.Visible and math.random(1, 30) == 1 then
+                                                    Remotes.Action.ActivateAbility:FireServer(999)
+                                                end
+                                            until attempts >= maxAttempts or (player.Character.HumanoidRootPart.CFrame.Position-newMove).magnitude <= 3 or not myTarget or not myTarget.Parent or myTarget.Parent:FindFirstChild("Humanoid") and myTarget.Parent.Humanoid.Health <= 0 or (myTarget.CFrame.Position-originPath).magnitude >= 5
+
+                                        
+                                        if myTarget and myTarget.Parent and myTarget.Parent:FindFirstChild("Humanoid") and myTarget ~= getNearestMob(player.Character.HumanoidRootPart.CFrame.Position) or not myTarget or not myTarget.Parent or myTarget.Parent:FindFirstChild("Humanoid") and myTarget.Parent.Humanoid.Health <= 0 or attempts >= maxAttempts or (myTarget.CFrame.Position-originPath).magnitude >= 5 or i >= 3 then
+                                            break
+                                        end
+                                    end
+                                end
+                        
+                            end
+                    end
+                end
+            end)
+        end
+    end
+
+
+
+
+
+end    
+
