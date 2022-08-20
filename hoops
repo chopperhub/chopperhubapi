@@ -56,7 +56,7 @@
 
     loadsettings()
 
-    local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/chopperhub/ChopperHubInit/main/library')))()
+    local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/chopperhub/chopperhubapi/main/library')))()
 
     local main = library:CreateWindow("Chopper Hub")
 
