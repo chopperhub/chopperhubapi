@@ -1,0 +1,162 @@
+if game.PlaceId == 8623484589 or game.PlaceId == 10008443595 or game.PlaceId == 7540728600 then --- HOOPS LIFE
+
+    -- SERVICES
+    
+    local vim = game:GetService("VirtualInputManager")
+    local uis = game:GetService("UserInputService")
+
+    --
+    _G.settings = {
+
+        autoGreen = false;  
+        nameSpoof = false;
+    }
+
+    local player = game:GetService("Players").LocalPlayer
+
+    local filename = game.Players.LocalPlayer.Name.. "-HoopsLife" .. "-settings.txt";
+
+    for i,v in pairs(_G.settings) do
+        print(i,v)
+    end
+
+
+    function loadsettings()
+        print("Chopper Hub: Loading settings...")
+        local httpService = game:GetService("HttpService")
+        if readfile and isfile and isfile("Chopper Hub/"..filename) then
+                _G.settings = httpService:JSONDecode(readfile("Chopper Hub/"..filename))
+                for i,v in pairs(_G.settings) do
+                    print(i,v)
+
+                end
+                
+            else
+                print("Chopper Hub: Executor isn't supported.")
+
+        end
+
+    end
+
+
+
+
+    function saveSettings()
+        print("Chopper Hub: Saving settings...")
+        local json
+        local httpService = game:GetService("HttpService")
+        if writefile and makefolder then
+            print("Chopper Hub: Settings Saved.")
+            json = httpService:JSONEncode(_G.settings)
+            local settingsTXT = writefile("Chopper Hub/"..filename, json)
+            makefolder("Chopper Hub")
+
+        else
+            print("Chopper Hub: Executor doesn't support saving settings.")
+        end
+    end
+
+    loadsettings()
+
+    local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/chopperhub/ChopperHubInit/main/library')))()
+
+    local main = library:CreateWindow("Chopper Hub")
+
+    local tab = main:CreateSection("Main")
+
+
+
+
+    local random = Random.new()
+    local letters = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'}
+
+
+    function getRandomLetter()
+        return letters[random:NextInteger(1,#letters)]
+    end
+
+
+    function getRandomString(length, includeCapitals)
+        local length = length or 10
+        local str = ''
+        for i=1,length do
+            local randomLetter = getRandomLetter()
+            if includeCapitals and random:NextNumber() > .5 then
+                randomLetter = string.upper(randomLetter)
+            end
+            str = str .. randomLetter
+        end
+        return str
+    end
+
+    function nameSpoof()
+        spawn(function()
+            while _G.settings.nameSpoof do
+                wait(math.random(0.3,0.6))
+                player.Character.Head:FindFirstChild("nametag_"..player.Name).TextLabel.Text = getRandomString(math.random(7,20), true)
+            end
+        end)
+    end
+
+
+
+
+
+    function autoGreen()
+
+        uis.InputBegan:connect(function(input)
+    
+        if input.KeyCode == Enum.KeyCode.E and _G.settings.autoGreen then
+        local a = 0
+        while true do
+        wait(0.01)
+        a +=0.001
+        print(a)
+        if a >= 0.018 then
+        break
+        end
+        end
+        print("endloop")
+        vim:SendKeyEvent(false,Enum.KeyCode.E,false,game)
+        end
+    
+        end)
+    
+    end
+
+
+
+
+    
+    if _G.settings.autoGreen then
+        autoGreen()
+    end
+
+    tab:CreateToggle("Auto Green", function(state)
+        _G.settings.autoGreen = state
+        saveSettings()
+        if state then
+        autoGreen()
+        end
+    end)
+
+    tab:CreateToggle("Name Spoof", function(state)
+        _G.settings.nameSpoof = state
+        saveSettings()
+        if state then
+            nameSpoof()
+        end
+    end)
+
+
+
+
+    -- GUI SETTINGS LOADED
+
+    
+   
+
+
+
+
+end
