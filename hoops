@@ -1,6 +1,4 @@
-if game.PlaceId == 8623484589 or game.PlaceId == 10008443595 or game.PlaceId == 7540728600 then --- HOOPS LIFE
 
-    -- SERVICES
     
     local vim = game:GetService("VirtualInputManager")
     local uis = game:GetService("UserInputService")
@@ -159,4 +157,4 @@ if game.PlaceId == 8623484589 or game.PlaceId == 10008443595 or game.PlaceId == 
 
 
 
-end
+
